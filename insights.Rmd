@@ -1,0 +1,20 @@
+---
+title: "Music Insights"
+author: Andrew Nguyen
+output: html_notebook
+---
+
+First, we need tidyverse to handle data important and wrongling...
+
+```{r}
+install.packages("tidyverse")
+library("tidyverse")
+
+preferences <- read_csv("https://raw.githubusercontent.com/introdsci/MusicSurvey/master/preferences-survey.csv")
+
+survery <- read_csv("https://raw.githubusercontent.com/introdsci/MusicSurvey/master/music-survey.csv")
+
+view(survery)
+gitadd(insights.rmd)
+gitpush```
+
