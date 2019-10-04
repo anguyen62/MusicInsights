@@ -1,0 +1,50 @@
+---
+title: "R Notebook"
+author: "Andrew Nguyen"
+date: "October 3, 2019"
+output:
+  html_document:
+    df_print: paged
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+
+```{r}
+View(survery) #make sure the dataframe exists
+
+Person <- survery[,c(3,4,6,7,8)] #one way to make a dataframe based on an existing one
+
+#change complicated column names to something tidier 
+colnames(Person)[colnames(Person)=="What is your pseudonym?"] <- "Pseudonym"
+colnames(Person)[colnames(Person)=="Which musical instruments/talents do you play? (Select all that apply)"] <- "Preferred_Instrument" 
+colnames(Person)[colnames(Person)=="Academic Year"] <- "Academic_Level"
+colnames(Person)[colnames(Person)=="Year you were born (YYYY)"] <- "Year"
+
+#levels(Person$`Academic Year` <- as.factor(Person$`Academic Year`))  #
+# [1] "Junior"    "Senior"    "Sophomore"  #output
+
+FavoriteSong <- data.frame(survery$Artist, survery$Song, survery$`Link to song (on Youtube or Vimeo)`) #Create FavoriteSong dataframe with an alternative method
+
+View(FavoriteSong)  #ensure clean compilation
+
+#since the FavoriteSong table has the literal object names (i.e. survey.artist, it's time to tidy those too. Let's try another, possibly simpler method.)
+colnames(FavoriteSong)[1] <- "Artist"
+colnames(FavoriteSong)[2] <- "Song"
+colnames(FavoriteSong)[3] <- "Link"
+
+Ratings <- data.frame(preferences$`What was your pseudonym?`, 'artist_song', 'Rating')  #Create Ratings
+
+#Let's clean that up, too.
+colnames(Ratings)[colnames(Ratings)=="preferences..What.was.your.pseudonym.."] <- "Pseudonym"
+colnames(Ratings)[2] <- "Song"
+colnames(Ratings)[3] <- "Rating"
+
+print(Person)
+print(FavoriteSong)
+print(Ratings)
+```
+
+ 
+
+
