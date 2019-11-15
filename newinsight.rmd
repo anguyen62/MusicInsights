@@ -10,8 +10,8 @@ include <- function(library_name){
 include("tidyverse")
 include("dplyr")
 
-Survey <- read_csv("https://raw.githubusercontent.com/introdsci/MusicSurvey/master/music-Survey.csv")
-Preferences <- read_csv("https://raw.githubusercontent.com/introdsci/MusicSurvey/master/preferences-Survey.csv")
+Survey <- read_csv("https://raw.githubusercontent.com/introdsci/MusicSurvey/master/music-survey.csv")
+Preferences <- read_csv("https://raw.githubusercontent.com/introdsci/MusicSurvey/master/preferences-survey.csv")
 ```
 
 ```{r}
@@ -51,6 +51,8 @@ Favorite_Song <- tibble(
 
 ```{r}
 Survey$Time_submitted <- as.POSIXlt(parse_datetime(Survey$Time_Submitted, format="%m/%d/%y %H:%M"))
+
+Person$Time_submitted <- as.POSIXlt(parse_datetime(Person$Time_Submitted, format="%m/%d/%y %H:%M"))
 
 Person$Major <- as.factor(Person$Major)
 Person$Academic_Year <- as.factor(Person$Academic_Year)
