@@ -1,0 +1,53 @@
+---
+title: "Music insights project, part 2"
+author: "Andrew Nguyen"
+output:
+  html_document:
+    df_print: paged
+---
+The following code is copied from the class Insights repository. Initially, we simply load the relevant libraries and take the code utilized for cleaning and outputting the Ratings table (referred to as Part 1).
+
+```{r message=FALSE, error=FALSE, warning=FALSE, results='hide'}
+include <- function(library_name){
+  if( !(library_name %in% installed.packages()) )
+    install.packages(library_name) 
+  library(library_name, character.only=TRUE)
+}
+include("tidyverse")
+include("knitr")
+purl("newinsight.rmd", output = "part1.r")
+source("part1.r")
+```
+
+For our assignment, we add data to an existing table for further information on each person. In particular here, we will determine "What is the average rating that person gave songs?"
+
+```{r}
+averages <- Ratings %>% group_by(Pseudonym) %>% summarise(Average_Rating = mean(Rating))  #summarize the column value by the means of ratings shared by a single pseudonym
+```
+
+Now that we have a table of pseudonyms and their average ratings, we can join the data to an existing table. Let's make a new dataset out of those to be safe.
+
+```{r}
+NewPersonData <- left_join(Person, averages, by ="Pseudonym")  #join the two datasets by similarly shared Pseudonyms
+head(NewPersonData)
+```
+
+Additionally, for this assignment, we must build split random sample sets of 75% (training). We will use sample.int as detailed here: https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/sample
+
+```{r}
+sample75 <- sample.int (
+  n = nrow(NewPersonData), 
+  size = .75*nrow(NewPersonData))
+
+testingset <- NewPersonData[-sample75,]  #testing 25% of the data
+
+trainingset <- NewPersonData[sample75,]  #testing 75% of the data
+```
+
+Using our new data and samples, we can now create a standard model to help predict the average song rating as detailed above. We will use Academic Year at random.
+```{r}
+somemodel <- lm(trainingset, formula = Average_Rating~Academic_Year)
+summary(somemodel)
+```
+
+For a shot-in-the-dark variable, the results are predictably bad.
